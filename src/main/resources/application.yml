@@ -1,0 +1,35 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: rooms
+  data:
+    mongodb:
+      uri: ${mongo_uri}
+  rabbitmq:
+    addresses: ${rabbit_uri}
+    username: ${rabbit_username}
+    password: ${rabbit_password}
+  zipkin:
+    base-url: ${zipkin_base_url}
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${eureka_service_url}
+
+rabbitmq:
+  exchanges:
+    rooms: internal-rooms.exchange
+    core: internal-core.exchange
+    config: internal-config.exchange
+    notification: internal-notification.exchange
+  queues:
+    rooms: rooms.queue
+  routing-keys:
+    rooms: internal.rooms.routing-key
+    config: internal.config.routing-key
+    notification: internal.notification.routing-key
+    core: internal.core.routing-key

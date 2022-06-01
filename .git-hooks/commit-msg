@@ -1,0 +1,34 @@
+#!/bin/bash
+
+colorOff="\033[0m"
+colorOff="\033[0m"
+redBold="\e[31m\e[1m"
+greenBold="\e[32m\e[1m"
+
+commit_msg_file=$1
+commit_msg_content="$(head -n 1 $commit_msg_file)"
+
+commit_msg_type_regex="feat|fix|refactor|perf|style|test|docs|build|ops|chore"
+commit_msg_scope_regex=".{1,20}"
+commit_msg_first_letter="[a-z]"
+commit_msg_subject_regex=".{0,99}"
+commit_msg_regex="^(${commit_msg_type_regex})(\(${commit_msg_scope_regex}\))?: ${commit_msg_first_letter}${commit_msg_subject_regex}\$"
+
+echo "Checking whether the commit message meets the standards..."
+echo "If that check fails, the commit will be aborted."
+
+if [[ $commit_msg_content =~ $commit_msg_regex ]] && [[ $commit_msg_content != *. ]]
+  then
+  printf "${greenBold}The commit message meets the standards.${colorOff}\n"
+  echo
+	exit 0
+else
+  printf "${redBold}The commit message does not meet the standards.${colorOff}\n"
+  printf "${redBold}The commit was aborted.${colorOff}\n"
+  echo "Read project documentation to learn more on commit message standards."
+  echo "Examples of valid messages:"
+  echo "  feat(login): add the 'remember me' button"
+  echo "  test: create test for the database connection"
+  echo
+	exit 1
+fi
