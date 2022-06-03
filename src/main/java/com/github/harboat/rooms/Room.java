@@ -1,5 +1,6 @@
 package com.github.harboat.rooms;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +11,7 @@ import java.util.Map;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @ToString
 @Builder
+@SuppressFBWarnings(value = {"EI_EXPOSE_REP", "EI_EXPOSE_REP2"})
 public class Room {
     @Id
     private String id;
